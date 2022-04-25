@@ -2,7 +2,7 @@
 :eyes:vory
 
 ## Project Proposal
-Deadline: Monday, 7 March 2022, 11:59 PM([doc Link](Doc/DB_Lab_Project_Proposal.pdf))
+Deadline: Monday, 7 March 2022, 11:59 PM([Doc Link](Doc/DB_Lab_Project_Proposal.pdf))
 
 ## Project Requirements and Analysis Artifacts
 
