@@ -11,6 +11,8 @@
 eyevory/node_modules
 socket-io/node_modules
 
+.angular
+
 # profiling files
 chrome-profiler-events*.json
 speed-measure-plugin*.json
