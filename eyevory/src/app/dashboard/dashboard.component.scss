@@ -1,0 +1,52 @@
+html, body {
+    margin:0px;
+    height:100%;
+}
+
+p {
+    color: white;
+}
+
+.main-screen {
+    background-color: #4B7BE5;
+    height: 74vh;
+}
+
+.options {
+    background-color: #4B7BE5;
+    height: 74vh;
+}
+
+.query-panel {
+    background-color: #4B7BE5;
+    margin-top: 1vh;
+    height: 25vh;
+}
+
+::ng-deep .mat-tab-label .mat-tab-label-content {
+    font-size: 14pt;
+    color: black;
+}
+
+.chart-diplay{
+    display: grid;
+    // grid-template-columns: repeat(2, 1fr);
+    // grid-gap: 3em;
+}
+
+.bParent div {
+    float: left;
+}
+
+.aParent div {
+    float: right;
+}
+
+.query-input {
+    width: 100%;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.query-form {
+    font-size: 8pt;
+}
