@@ -16,6 +16,8 @@ import { MatInputModule } from '@angular/material/input';
 
 import { NgChartsModule } from 'ng2-charts';
 
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { NgChartsModule } from 'ng2-charts';
     MatTabsModule,
     MatInputModule,
     NgChartsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,6 +3,7 @@ import { ChartDataset, ChartOptions } from "chart.js";
 import { BaseChartDirective } from "ng2-charts";
 
 import io from "socket.io-client";
+import { PanelService } from "../services/panel.service";
 
 const socket = io("http://localhost:3000");
 
@@ -111,7 +112,7 @@ export class DashboardComponent implements OnInit {
     // });
   }
 
-  constructor() {
+  constructor(private panel : PanelService) {
     this.pastQueries = [];
     this.currentQuery = "";
     this.currentQueryResults = "";
@@ -120,8 +121,15 @@ export class DashboardComponent implements OnInit {
   processQuery() {
     if (this.currentQuery != "") {
       this.pastQueries.push(this.currentQuery);
-      this.currentQuery = "";
+      this.currentQuery = 'from(bucket:"testing")\
+      |> range(start: -1m)\
+      |> filter(fn:(r) => r._measurement == "cpu" and r.cpu == "cpu-total" and r._field == "usage_system")';
       console.log(this.pastQueries);
+      console.log(this.currentQuery);
+      this.panel.getQueryData(this.currentQuery).subscribe((response) => {
+        console.log(response)
+      },
+      error => console.log(error));
     }
   }
 

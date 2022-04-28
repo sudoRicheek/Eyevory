@@ -2,11 +2,13 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework import status
 from rest_framework.response import Response
 
+import json
 import influxdb_client
+from influxdb_client.client.flux_table import FluxStructureEncoder
 
 bucket = "testing"
 org = "Eyevory"
-token = "PZAygriScOSlW91L-RZ-rGJMxX4nDnZWGZwsUVNQD7kQobX9CYeGInB_ZaT4FR25FupfElnhryxPsxmCYgdG-A=="
+token = "i4RVgHl6-PjzA4KlN9qoqZrShTayWYzce5b3auUcI2zjuenBLIL22F1GhfuMdokgO1FOxTSa5r-o-vF0zyQJ0g=="
 url = "http://localhost:8086"
 
 client = influxdb_client.InfluxDBClient(
@@ -23,14 +25,13 @@ query_api = client.query_api()
 def get_query_output(request):
     if request.method == "POST":
         if request.data.get('query', None) is None:
-            return Response({'query': "This field is needed!"}, status=status.HTTP_400_BAD_REQUEST)
+            print("hambahamba")
+            return Response({'query': "This field is needed!"}, status=status.HTTP_403_FORBIDDEN)
         
         result_query = query_api.query(org=org, query=request.data.get('query', None).strip())
-
-        result = {}
-        result['result'] = result_query[0].records
-        print(result['result'])
-        return Response(result, status=status.HTTP_200_OK)
+        output = json.dumps(result_query[0], cls=FluxStructureEncoder, indent=2)
+        print(output)
+    return Response(output, status=status.HTTP_200_OK)
 
 
 @api_view(['GET', ])
