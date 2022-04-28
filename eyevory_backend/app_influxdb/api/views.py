@@ -17,8 +17,26 @@ client = influxdb_client.InfluxDBClient(
 
 query_api = client.query_api()
 
+@api_view(['POST', ])
+@authentication_classes([])
+@permission_classes([])
+def get_query_output(request):
+    if request.method == "POST":
+        if request.data.get('query', None) is None:
+            return Response({'query': "This field is needed!"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        result_query = query_api.query(org=org, query=request.data.get('query', None).strip())
 
-def get_usage_cpu():
+        result = {}
+        result['result'] = result_query[0].records
+        print(result['result'])
+        return Response(result, status=status.HTTP_200_OK)
+
+
+@api_view(['GET', ])
+@authentication_classes([])
+@permission_classes([])
+def get_usage_cpu(request):
     query_cpu_system = 'from(bucket:"testing")\
         |> range(start: -1m)\
         |> filter(fn:(r) => r._measurement == "cpu" and r.cpu == "cpu-total" and r._field == "usage_system")'
@@ -43,10 +61,13 @@ def get_usage_cpu():
     result_cpu_usage['idle'] = result_idle[0].records[-1].get_value()
     result_cpu_usage['iowait'] = result_iowait[0].records[-1].get_value()
 
-    return result_cpu_usage
+    return Response(result_cpu_usage, status=status.HTTP_200_OK)
 
 
-def get_usage_mem():
+@api_view(['GET', ])
+@authentication_classes([])
+@permission_classes([])
+def get_usage_mem(request):
     query_mem_active = 'from(bucket:"testing")\
         |> range(start: -1m)\
         |> filter(fn:(r) => r._measurement == "mem" and r._field == "active")'
@@ -76,10 +97,13 @@ def get_usage_mem():
     result_mem['used'] = result_used[0].records[-1].get_value()
     result_mem['dirty'] = result_dirty[0].records[-1].get_value()
 
-    return result_mem
+    return Response(result_mem, status=status.HTTP_200_OK)
 
 
-def get_processes():
+@api_view(['GET', ])
+@authentication_classes([])
+@permission_classes([])
+def get_processes(request):
     query_proc_total = 'from(bucket:"testing")\
         |> range(start: -1m)\
         |> filter(fn:(r) => r._measurement == "processes" and r._field == "total")'
@@ -109,21 +133,11 @@ def get_processes():
     result_proc['zombies'] = result_zombies[0].records[-1].get_value()
     result_proc['idle'] = result_idle[0].records[-1].get_value()
 
-    return result_proc
+    return Response(result_proc, status=status.HTTP_200_OK)
 
 
-print(get_usage_cpu())
-print("-----------")
-print(get_usage_mem())
-print("-----------")
-print(get_processes())
-
-
-# Unauthenticated get data
-@api_view(['GET', ])
-@authentication_classes([])
-@permission_classes([])
-def get_data(request):
-    if request.method == 'GET':
-        data = get_usage_mem()
-        return Response(data, status=status.HTTP_200_OK)
+# print(get_usage_cpu())
+# print("-----------")
+# print(get_usage_mem())
+# print("-----------")
+# print(get_processes())
