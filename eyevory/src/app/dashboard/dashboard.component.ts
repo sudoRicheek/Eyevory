@@ -1,4 +1,5 @@
 import { Component, OnInit, QueryList, ViewChildren } from "@angular/core";
+import { MatTableDataSource } from "@angular/material/table";
 import { ChartDataset, ChartOptions } from "chart.js";
 import { BaseChartDirective } from "ng2-charts";
 
@@ -6,6 +7,18 @@ import io from "socket.io-client";
 import { PanelService } from "../services/panel.service";
 
 const socket = io("http://localhost:3000");
+
+type TableElement = {
+  result: string;
+  table: number;
+  _start: string;
+  _stop: string;
+  _time: string;
+  _value: number;
+  _field: string;
+  _measurement: string;
+  host: string;
+}
 
 @Component({
   selector: "app-dashboard",
@@ -344,6 +357,12 @@ export class DashboardComponent implements OnInit {
   currentQueryResults: string;
   pastQueries: string[];
 
+  tableSource: any[];
+  displayedColumns: any[];
+  dataSource: MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
+
+  isLoaded: boolean;
+
   ngOnInit() {
     socket.on("cpu_data", (res) => {
       console.log("cpu_data");
@@ -385,7 +404,27 @@ export class DashboardComponent implements OnInit {
       this.panel.getQueryData(this.currentQuery).subscribe(
         (response) => {
           console.log(response);
-          this.currentQueryResults = JSON.stringify(response);
+          var response2 = JSON.parse(response);
+          console.log(response2);
+          this.tableSource = [];
+          response2.forEach((roww: any) => {
+            roww['records'].forEach((row: any) => {
+              this.tableSource.push({
+                result: row.values.result,
+                table: row.values.table,
+                _start: row.values._start,
+                _stop: row.values._stop,
+                _time: row.values._time,
+                _value: row.values._value,
+                _field: row.values._field,
+                _measurement: row.values._measurement,
+                host: row.values.host
+              });
+            });
+          });
+          this.displayedColumns = ['result', 'table', '_start', '_stop', '_time', '_value', '_field', '_measurement', 'host'];
+          this.dataSource = new MatTableDataSource(this.tableSource);
+          this.isLoaded = true;
         },
         (error) => console.log(error)
       );
@@ -441,7 +480,7 @@ export class DashboardComponent implements OnInit {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
-      } else if (i == 14) {
+      } else if (i == 4) {
         let data_list = [data["system"], data["user"], data["idle"], data["iowait"]];
         child.chart.data.datasets[dataSetIndex].data = data_list;
       }
@@ -455,42 +494,42 @@ export class DashboardComponent implements OnInit {
     let i = 0;
     this.charts.forEach((child) => {
       console.log(i);
-      if (i == 4) {
+      if (i == 5) {
         child.chart.data.datasets[0].data.push(data["active"]);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
-      } else if (i == 5) {
+      } else if (i == 6) {
         child.chart.data.datasets[0].data.push(data["inactive"]);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
-      } else if (i == 6) {
+      } else if (i == 7) {
         child.chart.data.datasets[0].data.push(data["available"]);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
-      } else if (i == 7) {
+      } else if (i == 8) {
         child.chart.data.datasets[0].data.push(data["used"]);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
-      } else if (i == 8) {
+      } else if (i == 9) {
         child.chart.data.datasets[0].data.push(data["dirty"]);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
-      } else if (i == 15) {
+      } else if (i == 10) {
         let data_list = [data["active"], data["inactive"], data["available"], data["used"], data["dirty"]];
         child.chart.data.datasets[dataSetIndex].data = data_list;
       }
@@ -504,35 +543,35 @@ export class DashboardComponent implements OnInit {
     let i = 0;
     this.charts.forEach((child) => {
       console.log(i);
-      if (i == 9) {
+      if (i == 11) {
         child.chart.data.datasets[0].data.push(data["total"]);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
-      } else if (i == 10) {
+      } else if (i == 12) {
         child.chart.data.datasets[0].data.push(data["running"]);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
-      } else if (i == 11) {
+      } else if (i == 13) {
         child.chart.data.datasets[0].data.push(data["sleeping"]);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
-      } else if (i == 12) {
+      } else if (i == 14) {
         child.chart.data.datasets[0].data.push(data["zombies"]);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
-      } else if (i == 13) {
+      } else if (i == 15) {
         child.chart.data.datasets[0].data.push(data["idle"]);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
@@ -540,7 +579,7 @@ export class DashboardComponent implements OnInit {
           child.chart.data.datasets[0].data.shift();
         }
       } else if (i == 16) {
-        let data_list = [data["total"], data["running"], data["sleeping"], data["zombies"], data["idle"]];
+        let data_list = [data["running"], data["sleeping"], data["zombies"], data["idle"]];
         child.chart.data.datasets[dataSetIndex].data = data_list;
       }
       child.chart.update();

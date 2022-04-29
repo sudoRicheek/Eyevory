@@ -18,6 +18,9 @@ import { NgChartsModule } from 'ng2-charts';
 
 import { HttpClientModule } from '@angular/common/http';
 
+import { MatSliderModule } from '@angular/material/slider';
+import { MatTableModule } from '@angular/material/table';
+
 
 @NgModule({
   declarations: [
@@ -36,6 +39,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatInputModule,
     NgChartsModule,
     HttpClientModule,
+    MatSliderModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
