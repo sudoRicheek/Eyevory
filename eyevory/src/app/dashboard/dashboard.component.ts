@@ -1,11 +1,26 @@
 import { Component, OnInit, QueryList, ViewChildren } from "@angular/core";
+import { MatSliderChange } from "@angular/material/slider";
+import { MatTableDataSource } from "@angular/material/table";
 import { ChartDataset, ChartOptions } from "chart.js";
 import { BaseChartDirective } from "ng2-charts";
 
 import io from "socket.io-client";
 import { PanelService } from "../services/panel.service";
+import { ThreshService } from "../services/thresh.service";
 
 const socket = io("http://localhost:3000");
+
+type TableElement = {
+  result: string;
+  table: number;
+  _start: string;
+  _stop: string;
+  _time: string;
+  _value: number;
+  _field: string;
+  _measurement: string;
+  host: string;
+}
 
 @Component({
   selector: "app-dashboard",
@@ -14,6 +29,8 @@ const socket = io("http://localhost:3000");
 })
 export class DashboardComponent implements OnInit {
   @ViewChildren(BaseChartDirective) charts: QueryList<BaseChartDirective>;
+
+  pieChartColors = ["#FCD900", "#E8630A", "#4700D8", "#4B7BE5", "#006E7F"]
 
   public lineChartOptions1: ChartOptions = {
     responsive: true,
@@ -27,20 +44,13 @@ export class DashboardComponent implements OnInit {
   public lineChartPlugins1 = [];
   public lineChartData1: ChartDataset[] = [
     {
-      data: [0,0,0,0,0],
+      data: [0, 0, 0, 0, 0],
       label: "CPU System",
       type: "line",
-      backgroundColor: "rgba(255,0,255,0.4)",
-      borderColor: "rgba(255,0,255,0.4)",
+      backgroundColor: "#FF85B3",
+      borderColor: "#FF85B3",
       tension: 0.3,
     },
-    // {
-    //   data: [243, 156, 365, 30, 156, 265, 356, 543].reverse(),
-    //   label: "Second Dataset",
-    //   type: "bar",
-    //   backgroundColor: "rgba(0,0,255,0.4)",
-    //   borderColor: "rgba(0,0,255,0.4)",
-    // },
   ];
 
   public lineChartOptions2: ChartOptions = {
@@ -55,11 +65,11 @@ export class DashboardComponent implements OnInit {
   public lineChartPlugins2 = [];
   public lineChartData2: ChartDataset[] = [
     {
-      data: [0,0,0,0,0],
+      data: [0, 0, 0, 0, 0],
       label: "CPU User",
       type: "line",
-      backgroundColor: "rgba(255,0,255,0.4)",
-      borderColor: "rgba(255,0,255,0.4)",
+      backgroundColor: "#FF85B3",
+      borderColor: "#FF85B3",
       tension: 0.3,
     },
   ];
@@ -76,11 +86,11 @@ export class DashboardComponent implements OnInit {
   public lineChartPlugins3 = [];
   public lineChartData3: ChartDataset[] = [
     {
-      data: [0,0,0,0,0],
+      data: [0, 0, 0, 0, 0],
       label: "CPU Idle",
       type: "line",
-      backgroundColor: "rgba(255,0,255,0.4)",
-      borderColor: "rgba(255,0,255,0.4)",
+      backgroundColor: "#FF85B3",
+      borderColor: "#FF85B3",
       tension: 0.3,
     },
   ];
@@ -97,11 +107,11 @@ export class DashboardComponent implements OnInit {
   public lineChartPlugins4 = [];
   public lineChartData4: ChartDataset[] = [
     {
-      data: [0,0,0,0,0],
+      data: [0, 0, 0, 0, 0],
       label: "CPU I/O Wait",
       type: "line",
-      backgroundColor: "rgba(255,0,255,0.4)",
-      borderColor: "rgba(255,0,255,0.4)",
+      backgroundColor: "#FF85B3",
+      borderColor: "#FF85B3",
       tension: 0.3,
     },
   ];
@@ -118,11 +128,11 @@ export class DashboardComponent implements OnInit {
   public lineChartPlugins5 = [];
   public lineChartData5: ChartDataset[] = [
     {
-      data: [0,0,0,0,0],
+      data: [0, 0, 0, 0, 0],
       label: "Memory Active",
       type: "line",
-      backgroundColor: "rgba(255,0,255,0.4)",
-      borderColor: "rgba(255,0,255,0.4)",
+      backgroundColor: "#4700D8",
+      borderColor: "#4700D8",
       tension: 0.3,
     },
   ];
@@ -139,11 +149,11 @@ export class DashboardComponent implements OnInit {
   public lineChartPlugins6 = [];
   public lineChartData6: ChartDataset[] = [
     {
-      data: [0,0,0,0,0],
+      data: [0, 0, 0, 0, 0],
       label: "Memory Inactive",
       type: "line",
-      backgroundColor: "rgba(255,0,255,0.4)",
-      borderColor: "rgba(255,0,255,0.4)",
+      backgroundColor: "#4700D8",
+      borderColor: "#4700D8",
       tension: 0.3,
     },
   ];
@@ -160,11 +170,11 @@ export class DashboardComponent implements OnInit {
   public lineChartPlugins7 = [];
   public lineChartData7: ChartDataset[] = [
     {
-      data: [0,0,0,0,0],
+      data: [0, 0, 0, 0, 0],
       label: "Memory Available",
       type: "line",
-      backgroundColor: "rgba(255,0,255,0.4)",
-      borderColor: "rgba(255,0,255,0.4)",
+      backgroundColor: "#4700D8",
+      borderColor: "#4700D8",
       tension: 0.3,
     },
   ];
@@ -181,11 +191,11 @@ export class DashboardComponent implements OnInit {
   public lineChartPlugins8 = [];
   public lineChartData8: ChartDataset[] = [
     {
-      data: [0,0,0,0,0],
+      data: [0, 0, 0, 0, 0],
       label: "Memory Used",
       type: "line",
-      backgroundColor: "rgba(255,0,255,0.4)",
-      borderColor: "rgba(255,0,255,0.4)",
+      backgroundColor: "#4700D8",
+      borderColor: "#4700D8",
       tension: 0.3,
     },
   ];
@@ -202,11 +212,11 @@ export class DashboardComponent implements OnInit {
   public lineChartPlugins9 = [];
   public lineChartData9: ChartDataset[] = [
     {
-      data: [0,0,0,0,0],
+      data: [0, 0, 0, 0, 0],
       label: "Memory Dirty",
       type: "line",
-      backgroundColor: "rgba(255,0,255,0.4)",
-      borderColor: "rgba(255,0,255,0.4)",
+      backgroundColor: "#4700D8",
+      borderColor: "#4700D8",
       tension: 0.3,
     },
   ];
@@ -223,11 +233,11 @@ export class DashboardComponent implements OnInit {
   public lineChartPlugins10 = [];
   public lineChartData10: ChartDataset[] = [
     {
-      data: [0,0,0,0,0],
+      data: [0, 0, 0, 0, 0],
       label: "Processes Total",
       type: "line",
-      backgroundColor: "rgba(255,0,255,0.4)",
-      borderColor: "rgba(255,0,255,0.4)",
+      backgroundColor: "#9900F0",
+      borderColor: "#9900F0",
       tension: 0.3,
     },
   ];
@@ -244,11 +254,11 @@ export class DashboardComponent implements OnInit {
   public lineChartPlugins11 = [];
   public lineChartData11: ChartDataset[] = [
     {
-      data: [0,0,0,0,0],
+      data: [0, 0, 0, 0, 0],
       label: "Processes Running",
       type: "line",
-      backgroundColor: "rgba(255,0,255,0.4)",
-      borderColor: "rgba(255,0,255,0.4)",
+      backgroundColor: "#9900F0",
+      borderColor: "#9900F0",
       tension: 0.3,
     },
   ];
@@ -265,11 +275,11 @@ export class DashboardComponent implements OnInit {
   public lineChartPlugins12 = [];
   public lineChartData12: ChartDataset[] = [
     {
-      data: [0,0,0,0,0],
+      data: [0, 0, 0, 0, 0],
       label: "Processes Sleeping",
       type: "line",
-      backgroundColor: "rgba(255,0,255,0.4)",
-      borderColor: "rgba(255,0,255,0.4)",
+      backgroundColor: "#9900F0",
+      borderColor: "#9900F0",
       tension: 0.3,
     },
   ];
@@ -286,11 +296,11 @@ export class DashboardComponent implements OnInit {
   public lineChartPlugins13 = [];
   public lineChartData13: ChartDataset[] = [
     {
-      data: [0,0,0,0,0],
+      data: [0, 0, 0, 0, 0],
       label: "Proceeses Zombies",
       type: "line",
-      backgroundColor: "rgba(255,0,255,0.4)",
-      borderColor: "rgba(255,0,255,0.4)",
+      backgroundColor: "#9900F0",
+      borderColor: "#9900F0",
       tension: 0.3,
     },
   ];
@@ -307,77 +317,126 @@ export class DashboardComponent implements OnInit {
   public lineChartPlugins14 = [];
   public lineChartData14: ChartDataset[] = [
     {
-      data: [0,0,0,0,0],
+      data: [0, 0, 0, 0, 0],
       label: "Processes Idle",
       type: "line",
-      backgroundColor: "rgba(255,0,255,0.4)",
-      borderColor: "rgba(255,0,255,0.4)",
+      backgroundColor: "#9900F0",
+      borderColor: "#9900F0",
       tension: 0.3,
     },
   ];
 
   public pieChartOptions1: ChartOptions = {
     responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: "CPU distribution in last reading",
+      },
+    },
   };
   public pieChartLabels1: any[] = ["system", "user", "idle", "iowait"];
   public pieChartData1: ChartDataset[] = [
-    { data: [0, 0, 0, 0], label: "CPU distribution in last reading" },
+    { data: [0, 0, 0, 0], label: "CPU distribution in last reading", backgroundColor:  this.pieChartColors},
   ];
 
   public pieChartOptions2: ChartOptions = {
     responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: "Memory usage in last reading",
+      },
+    },
   };
-  public pieChartLabels2: any[] = ["active", "inactive", "available", "used", "dirty"];
+  public pieChartLabels2: any[] = [
+    "active",
+    "inactive",
+    "available",
+    "used",
+    "dirty",
+  ];
   public pieChartData2: ChartDataset[] = [
-    { data: [0, 0, 0, 0], label: "Memory usage in last reading" },
+    { data: [0, 0, 0, 0, 0], label: "Memory usage in last reading", backgroundColor:  this.pieChartColors},
   ];
 
   public pieChartOptions3: ChartOptions = {
     responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: "Processes distribution in last reading",
+      },
+    },
   };
-  public pieChartLabels3: any[] = ["total", "running", "sleeping", "zombies", "idle"];
+  public pieChartLabels3: any[] = ["running", "sleeping", "zombies", "idle"];
   public pieChartData3: ChartDataset[] = [
-    { data: [0, 0, 0, 0], label: "Processes distribution in last reading" },
+    { data: [0, 0, 0, 0, 0], label: "Processes distribution in last reading", backgroundColor:  this.pieChartColors},
   ];
 
   currentQuery: string;
   currentQueryResults: string;
   pastQueries: string[];
+  queryCounter: number;
+  cpu_threshold: number;
+  mem_avail_threshold: number;
+  threshNotChanged: boolean;
+  alerts: any;
+
+  tableSource: any[];
+  displayedColumns: any[];
+  dataSource: MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
+
+  isLoaded: boolean;
 
   ngOnInit() {
     socket.on("cpu_data", (res) => {
       console.log("cpu_data");
       console.log(res);
       this.updateChartDataCPU(this.charts, res, 0);
-      // this.updatePieChartData(this.charts[0], res, 0);
     });
     socket.on("mem_data", (res) => {
       console.log("mem_data");
       console.log(res);
       this.updateChartDataMem(this.charts, res, 0);
-      // this.updatePieChartData(this.charts[0], res, 0);
     });
     socket.on("processes_data", (res) => {
       console.log("processes_data");
       console.log(res);
       this.updateChartDataProc(this.charts, res, 0);
-      // this.updatePieChartData(this.charts[0], res, 0);
+    });
+    socket.on("alerts", (res) => {
+      console.log("alerts");
+      console.log(res);
+      this.addAlert(res);
     });
 
-    // socket.on("data2", (res) => {
-    //   console.log("data2");
-    //   console.log(res);
-    //   this.updateChartData(this.charts, res, 1);
-    // });
+    this.threshService.getThresholds().subscribe(
+      (res) => {
+        this.cpu_threshold = res.cpu_idle_threshold;
+        this.mem_avail_threshold = res.mem_available_threshold;
+    },
+      (error) => {
+        console.log(error);
+      });
   }
 
-  constructor(private panel: PanelService) {
+  constructor(
+    private panel: PanelService,
+    private threshService: ThreshService
+  ) {
     this.pastQueries = [];
     this.currentQuery = "";
     this.currentQueryResults = "";
+    this.queryCounter = 0;
+    this.cpu_threshold = 90;
+    this.mem_avail_threshold = 1;
+    this.threshNotChanged = true;
+    this.alerts = [];
   }
 
   processQuery() {
+    this.queryCounter = this.pastQueries.length + 1;
     if (this.currentQuery != "") {
       this.pastQueries.push(this.currentQuery);
       console.log(this.pastQueries);
@@ -385,11 +444,81 @@ export class DashboardComponent implements OnInit {
       this.panel.getQueryData(this.currentQuery).subscribe(
         (response) => {
           console.log(response);
-          this.currentQueryResults = JSON.stringify(response);
+          var response2 = JSON.parse(response);
+          console.log(response2);
+          this.tableSource = [];
+          response2.forEach((roww: any) => {
+            roww['records'].forEach((row: any) => {
+              this.tableSource.push({
+                result: row.values.result,
+                table: row.values.table,
+                _start: row.values._start,
+                _stop: row.values._stop,
+                _time: row.values._time,
+                _value: row.values._value,
+                _field: row.values._field,
+                _measurement: row.values._measurement,
+                host: row.values.host
+              });
+            });
+          });
+          this.displayedColumns = ['result', 'table', '_start', '_stop', '_time', '_value', '_field', '_measurement', 'host'];
+          this.dataSource = new MatTableDataSource(this.tableSource);
+          this.isLoaded = true;
         },
-        (error) => console.log(error)
+        (error) => {
+          console.log(error);
+          this.currentQuery = "";
+        }
       );
     }
+  }
+
+  addAlert(alertData) {
+    if (alertData.cpu_idle_warning == true)
+      this.alerts.push({"title": "normal", "message": "CPU too much IDLE"});
+    if (alertData.mem_available_low_warning == true)
+      this.alerts.push({"title": "danger", "message": "Memory availability low"});
+    if (alertData.mem_available_low_warning == false && alertData.time_mem_threshold_cross > 0 && alertData.time_mem_threshold_cross < 1000)
+      this.alerts.push({"title": "danger", "message": "Memory availability predicted to be low in " + alertData.time_mem_threshold_cross + " seconds"});
+    console.log(this.alerts);
+  }
+
+  getPastQuery() {
+    if (this.queryCounter > 0) {
+      this.queryCounter--;
+      this.currentQuery = this.pastQueries[this.queryCounter];
+    }
+  }
+
+  getNextQuery() {
+    if (this.queryCounter < this.pastQueries.length - 1) {
+      this.queryCounter++;
+      this.currentQuery = this.pastQueries[this.queryCounter];
+    } else if (this.queryCounter == this.pastQueries.length - 1) {
+      this.queryCounter++;
+      this.currentQuery = "";
+    } else {
+      this.currentQuery = "";
+    }
+  }
+
+  onInputChange(event: MatSliderChange) {
+    this.threshNotChanged = false;
+  }
+
+  updateThresholds() {
+    this.threshNotChanged = true;
+    this.threshService
+      .updateThresholds(this.cpu_threshold, this.mem_avail_threshold)
+      .subscribe(
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 
   addData(chart, label, data) {
@@ -420,6 +549,7 @@ export class DashboardComponent implements OnInit {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
+        child.chart.update();
       } else if (i == 1) {
         child.chart.data.datasets[0].data.push(data["user"]);
         child.chart.data.labels.push("");
@@ -427,6 +557,7 @@ export class DashboardComponent implements OnInit {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
+        child.chart.update();
       } else if (i == 2) {
         child.chart.data.datasets[0].data.push(data["idle"]);
         child.chart.data.labels.push("");
@@ -434,6 +565,7 @@ export class DashboardComponent implements OnInit {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
+        child.chart.update();
       } else if (i == 3) {
         child.chart.data.datasets[0].data.push(data["iowait"]);
         child.chart.data.labels.push("");
@@ -441,11 +573,16 @@ export class DashboardComponent implements OnInit {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
-      } else if (i == 14) {
-        let data_list = [data["system"], data["user"], data["idle"], data["iowait"]];
+      } else if (i == 4) {
+        let data_list = [
+          data["system"],
+          data["user"],
+          data["idle"],
+          data["iowait"],
+        ];
         child.chart.data.datasets[dataSetIndex].data = data_list;
+        child.chart.update();
       }
-      child.chart.update();
       i++;
     });
   }
@@ -455,46 +592,57 @@ export class DashboardComponent implements OnInit {
     let i = 0;
     this.charts.forEach((child) => {
       console.log(i);
-      if (i == 4) {
+      if (i == 5) {
         child.chart.data.datasets[0].data.push(data["active"]);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
+          child.chart.update();
         }
-      } else if (i == 5) {
+      } else if (i == 6) {
         child.chart.data.datasets[0].data.push(data["inactive"]);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
-      } else if (i == 6) {
+        child.chart.update();
+      } else if (i == 7) {
         child.chart.data.datasets[0].data.push(data["available"]);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
-      } else if (i == 7) {
+        child.chart.update();
+      } else if (i == 8) {
         child.chart.data.datasets[0].data.push(data["used"]);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
-      } else if (i == 8) {
+        child.chart.update();
+      } else if (i == 9) {
         child.chart.data.datasets[0].data.push(data["dirty"]);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
-      } else if (i == 15) {
-        let data_list = [data["active"], data["inactive"], data["available"], data["used"], data["dirty"]];
+        child.chart.update();
+      } else if (i == 10) {
+        let data_list = [
+          data["active"],
+          data["inactive"],
+          data["available"],
+          data["used"],
+          data["dirty"],
+        ];
         child.chart.data.datasets[dataSetIndex].data = data_list;
+        child.chart.update();
       }
-      child.chart.update();
       i++;
     });
   }
@@ -504,46 +652,56 @@ export class DashboardComponent implements OnInit {
     let i = 0;
     this.charts.forEach((child) => {
       console.log(i);
-      if (i == 9) {
+      if (i == 11) {
         child.chart.data.datasets[0].data.push(data["total"]);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
-      } else if (i == 10) {
+        child.chart.update();
+      } else if (i == 12) {
         child.chart.data.datasets[0].data.push(data["running"]);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
-      } else if (i == 11) {
+        child.chart.update();
+      } else if (i == 13) {
         child.chart.data.datasets[0].data.push(data["sleeping"]);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
-      } else if (i == 12) {
+        child.chart.update();
+      } else if (i == 14) {
         child.chart.data.datasets[0].data.push(data["zombies"]);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
-      } else if (i == 13) {
+        child.chart.update();
+      } else if (i == 15) {
         child.chart.data.datasets[0].data.push(data["idle"]);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
           child.chart.data.labels.shift();
           child.chart.data.datasets[0].data.shift();
         }
+        child.chart.update();
       } else if (i == 16) {
-        let data_list = [data["total"], data["running"], data["sleeping"], data["zombies"], data["idle"]];
+        let data_list = [
+          data["running"],
+          data["sleeping"],
+          data["zombies"],
+          data["idle"],
+        ];
         child.chart.data.datasets[dataSetIndex].data = data_list;
+        child.chart.update();
       }
-      child.chart.update();
       i++;
     });
   }

@@ -7,35 +7,136 @@
             font-family: 'Courier New', Courier, monospace;
             color: black;
             border-bottom: 1pt solid;
-            border-width: 1pt;
+            border-width: 1.5pt;
             border-color: black;
             border-radius: 2pt;
             background-color: #4b7be5;
+            font-weight: bold;
           "
         >
           &nbsp;&nbsp;&nbsp;Settings >>>
         </p>
+
+        <div class="container options-content">
+          <p class="slider-label">CPU Idle Time Threshold</p>
+          <mat-slider
+            class="cpu-thresh-slider"
+            [max]="100"
+            [min]="1"
+            [step]="1"
+            [thumbLabel]="true"
+            [(ngModel)]="cpu_threshold"
+            (input)="onInputChange($event)"
+          >
+          </mat-slider>
+          <hr>
+          <p class="slider-label">Memory Availability Threshold</p>
+          <mat-slider
+            class="mem-thresh-slider"
+            [max]="8"
+            [min]="0.5"
+            [step]="0.5"
+            [thumbLabel]="true"
+            [(ngModel)]="mem_avail_threshold"
+            (input)="onInputChange($event)"
+
+          >
+          </mat-slider>
+          <hr>
+          <div style="float: right;">
+            <button mat-raised-button color="warn" [disabled]="threshNotChanged" (click)="updateThresholds()">Submit New Thresholds</button>
+          </div>
+          <div style="margin-top: 8.5vh;">
+            <hr>
+          </div>
+        </div>
+
+        <div class="container alerts-content">
+          <p class="slider-label" style="color: black;">
+            Logs >>>
+          </p>
+          <hr>
+          <div class="alerts-container">
+            <div *ngFor="let alert of alerts">
+              <div *ngIf="alert.title === 'danger'">
+                <p class="danger-alert">[!] {{alert.message}}</p>
+              </div>
+              <div *ngIf="alert.title === 'normal'">
+                <p class="normal-alert">[+] {{alert.message}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
-    <div class="col-md-9" style="padding-left: 0.3vw;">
+    <div class="col-md-9" style="padding-left: 0.3vw">
       <div class="main-screen bg-light rounded">
         <mat-tab-group mat-align-tabs="start">
           <mat-tab label="Query Results">
-            <div class="container query-results" style="overflow:scroll;height:84vh;">
-              {{ currentQueryResults }}
+            <div class="container query-results" style="overflow:scroll;height:75vh;">
+              <table *ngIf="isLoaded" mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="result">
+                    <th mat-header-cell *matHeaderCellDef> result </th>
+                    <td mat-cell *matCellDef="let player"> {{player.result}} </td>
+                </ng-container>
+            
+                <ng-container matColumnDef="table">
+                    <th mat-header-cell *matHeaderCellDef> table </th>
+                    <td mat-cell *matCellDef="let player"> {{player.table}} </td>
+                </ng-container>
+            
+                <ng-container matColumnDef="_start">
+                    <th mat-header-cell *matHeaderCellDef> _start </th>
+                    <td mat-cell *matCellDef="let player"> {{player._start}} </td>
+                </ng-container>
+            
+                <ng-container matColumnDef="_stop">
+                    <th mat-header-cell *matHeaderCellDef> _stop </th>
+                    <td mat-cell *matCellDef="let player"> {{player._stop}} </td>
+                </ng-container>
+        
+                <ng-container matColumnDef="_time">
+                    <th mat-header-cell *matHeaderCellDef> _time </th>
+                    <td mat-cell *matCellDef="let player"> {{player._time}} </td>
+                </ng-container>
+        
+                <ng-container matColumnDef="_value">
+                    <th mat-header-cell *matHeaderCellDef> _value </th>
+                    <td mat-cell *matCellDef="let player"> {{player._value}} </td>
+                </ng-container>
+        
+                <ng-container matColumnDef="_field">
+                    <th mat-header-cell *matHeaderCellDef> _field </th>
+                    <td mat-cell *matCellDef="let player"> {{player._field}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="_measurement">
+                  <th mat-header-cell *matHeaderCellDef> _measurement </th>
+                  <td mat-cell *matCellDef="let player"> {{player._measurement}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="host">
+                  <th mat-header-cell *matHeaderCellDef> host </th>
+                  <td mat-cell *matCellDef="let player"> {{player.host}} </td>
+                </ng-container>
+            
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="row-hover"></tr>
+            </table>
             </div>
           </mat-tab>
 
           <mat-tab label="Server Statistics">
             <mat-tab-group mat-align-tabs="start">
               <mat-tab label="CPU Usage">
-                <div style="overflow:scroll; height:70vh;">
+                <div style="overflow-y: scroll; height: 70vh">
                   <div class="bParent">
                     <div
                       class="lineChart"
                       style="
                         display: block;
-                        width: 75%;
+                        width: 45%;
                         margin-top: 5%;
                         margin-left: 3%;
                         margin-right: auto;
@@ -51,12 +152,12 @@
                       >
                       </canvas>
                     </div>
-      
+
                     <div
                       class="lineChart"
                       style="
                         display: block;
-                        width: 75%;
+                        width: 45%;
                         margin-top: 5%;
                         margin-left: 3%;
                         margin-right: auto;
@@ -72,12 +173,12 @@
                       >
                       </canvas>
                     </div>
-      
+
                     <div
                       class="lineChart"
                       style="
                         display: block;
-                        width: 75%;
+                        width: 45%;
                         margin-top: 5%;
                         margin-left: 3%;
                         margin-right: 0%;
@@ -98,7 +199,7 @@
                       class="lineChart"
                       style="
                         display: block;
-                        width: 75%;
+                        width: 45%;
                         margin-top: 5%;
                         margin-left: 3%;
                         margin-right: 0%;
@@ -115,16 +216,16 @@
                       </canvas>
                     </div>
                   </div>
-      
+
                   <div class="aParent">
                     <div
                       class="pieChart"
                       style="
                         display: block;
-                        width: 50%;
+                        width: 40%;
                         margin-top: 0%;
-                        margin-left: 0%;
-                        margin-right: 3%;
+                        margin-left: auto;
+                        margin-right: auto;
                       "
                     >
                       <canvas
@@ -141,13 +242,13 @@
                 </div>
               </mat-tab>
               <mat-tab label="Memory">
-                <div style="overflow:scroll; height:70vh;">
+                <div style="overflow-y: scroll; height: 70vh">
                   <div class="bParent">
                     <div
                       class="lineChart"
                       style="
                         display: block;
-                        width: 75%;
+                        width: 45%;
                         margin-top: 5%;
                         margin-left: 3%;
                         margin-right: auto;
@@ -163,12 +264,12 @@
                       >
                       </canvas>
                     </div>
-      
+
                     <div
                       class="lineChart"
                       style="
                         display: block;
-                        width: 75%;
+                        width: 45%;
                         margin-top: 5%;
                         margin-left: 3%;
                         margin-right: auto;
@@ -184,12 +285,12 @@
                       >
                       </canvas>
                     </div>
-      
+
                     <div
                       class="lineChart"
                       style="
                         display: block;
-                        width: 75%;
+                        width: 45%;
                         margin-top: 5%;
                         margin-left: 3%;
                         margin-right: 0%;
@@ -210,7 +311,7 @@
                       class="lineChart"
                       style="
                         display: block;
-                        width: 75%;
+                        width: 45%;
                         margin-top: 5%;
                         margin-left: 3%;
                         margin-right: 0%;
@@ -231,7 +332,7 @@
                       class="lineChart"
                       style="
                         display: block;
-                        width: 75%;
+                        width: 45%;
                         margin-top: 5%;
                         margin-left: 3%;
                         margin-right: 0%;
@@ -248,16 +349,16 @@
                       </canvas>
                     </div>
                   </div>
-      
+
                   <div class="aParent">
                     <div
                       class="pieChart"
                       style="
                         display: block;
-                        width: 50%;
+                        width: 40%;
                         margin-top: 0%;
-                        margin-left: 0%;
-                        margin-right: 3%;
+                        margin-left: auto;
+                        margin-right: auto;
                       "
                     >
                       <canvas
@@ -274,13 +375,13 @@
                 </div>
               </mat-tab>
               <mat-tab label="Processes">
-                <div style="overflow:scroll; height:70vh;">
+                <div style="overflow-y: scroll; height: 70vh">
                   <div class="bParent">
                     <div
                       class="lineChart"
                       style="
                         display: block;
-                        width: 75%;
+                        width: 45%;
                         margin-top: 5%;
                         margin-left: 3%;
                         margin-right: auto;
@@ -296,12 +397,12 @@
                       >
                       </canvas>
                     </div>
-      
+
                     <div
                       class="lineChart"
                       style="
                         display: block;
-                        width: 75%;
+                        width: 45%;
                         margin-top: 5%;
                         margin-left: 3%;
                         margin-right: auto;
@@ -317,12 +418,12 @@
                       >
                       </canvas>
                     </div>
-      
+
                     <div
                       class="lineChart"
                       style="
                         display: block;
-                        width: 75%;
+                        width: 45%;
                         margin-top: 5%;
                         margin-left: 3%;
                         margin-right: 0%;
@@ -343,7 +444,7 @@
                       class="lineChart"
                       style="
                         display: block;
-                        width: 75%;
+                        width: 45%;
                         margin-top: 5%;
                         margin-left: 3%;
                         margin-right: 0%;
@@ -364,7 +465,7 @@
                       class="lineChart"
                       style="
                         display: block;
-                        width: 75%;
+                        width: 45%;
                         margin-top: 5%;
                         margin-left: 3%;
                         margin-right: 0%;
@@ -381,16 +482,16 @@
                       </canvas>
                     </div>
                   </div>
-      
+
                   <div class="aParent">
                     <div
                       class="pieChart"
                       style="
                         display: block;
-                        width: 50%;
+                        width: 40%;
                         margin-top: 0%;
-                        margin-left: 0%;
-                        margin-right: 3%;
+                        margin-left: auto;
+                        margin-right: auto;
                       "
                     >
                       <canvas
@@ -407,8 +508,6 @@
                 </div>
               </mat-tab>
             </mat-tab-group>
-            
-            
           </mat-tab>
         </mat-tab-group>
       </div>
@@ -422,10 +521,11 @@
             font-family: 'Courier New', Courier, monospace;
             color: black;
             border-bottom: 1pt solid;
-            border-width: 1pt;
+            border-width: 1.5pt;
             border-color: black;
             border-radius: 2pt;
             background-color: #4b7be5;
+            font-weight: bold;
           "
         >
           &nbsp;&nbsp;&nbsp;Query Panel >>>
@@ -439,15 +539,11 @@
                 type="text"
                 [(ngModel)]="currentQuery"
                 (keyup.enter)="processQuery()"
+                (keyup.arrowup)="getPastQuery()"
+                (keyup.arrowdown)="getNextQuery()"
               ></textarea>
               <mat-label> >> </mat-label>
             </mat-form-field>
-          </div>
-
-          <div class="past-queries">
-            <ul>
-              <li *ngFor="let query of pastQueries">{{ query }}</li>
-            </ul>
           </div>
         </div>
       </div>

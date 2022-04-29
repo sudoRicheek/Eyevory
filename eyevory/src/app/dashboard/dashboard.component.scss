@@ -9,23 +9,26 @@ p {
 
 .main-screen {
     background-color: #4B7BE5;
-    height: 84vh;
+    height: 85vh;
+    border-top: #FF6363 solid 5px;
 }
 
 .options {
     background-color: #4B7BE5;
-    height: 84vh;
+    height: 85vh;
 }
 
 .query-panel {
     background-color: #4B7BE5;
     margin-top: 1vh;
-    height: 15vh;
+    height: 14vh;
 }
 
 ::ng-deep .mat-tab-label .mat-tab-label-content {
-    font-size: 14pt;
+    font-size: 12pt;
+    font-family: 'Courier New', Courier, monospace;
     color: black;
+    font-weight: bold;
 }
 
 .chart-diplay{
@@ -45,4 +48,53 @@ p {
 
 .query-form {
     font-size: 8pt;
+}
+
+.cpu-thresh-slider {
+    width: 100%;
+    margin-top: 3vh;
+}
+
+.mem-thresh-slider {
+    width: 100%;
+    margin-top: 3vh;
+}
+
+.slider-label {
+    font-size: 12pt;
+    margin-bottom: 0pt;
+    font-family: monospace;
+    color: #F55353;
+    font-weight: bold;
+}
+
+.alerts-container {
+    overflow-y: scroll;
+    height: 27vh;
+}
+
+.danger-alert {
+    font-size: 8pt;
+    font-family: monospace;
+    color: red;
+    font-weight: bold;
+}
+
+.normal-alert {
+    font-size: 8pt;
+    font-family: monospace;
+    color: #b49c03;
+    font-weight: 500;
+}
+th {
+    padding: 5px;
+}
+
+td {
+    padding: 10px 0;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 50px 0;
 }
