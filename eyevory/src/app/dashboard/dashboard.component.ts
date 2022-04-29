@@ -1,5 +1,6 @@
 import { Component, OnInit, QueryList, ViewChildren } from "@angular/core";
 import { MatSliderChange } from "@angular/material/slider";
+import { MatTableDataSource } from "@angular/material/table";
 import { ChartDataset, ChartOptions } from "chart.js";
 import { BaseChartDirective } from "ng2-charts";
 
@@ -8,6 +9,18 @@ import { PanelService } from "../services/panel.service";
 import { ThreshService } from "../services/thresh.service";
 
 const socket = io("http://localhost:3000");
+
+type TableElement = {
+  result: string;
+  table: number;
+  _start: string;
+  _stop: string;
+  _time: string;
+  _value: number;
+  _field: string;
+  _measurement: string;
+  host: string;
+}
 
 @Component({
   selector: "app-dashboard",
@@ -370,6 +383,12 @@ export class DashboardComponent implements OnInit {
   threshNotChanged: boolean;
   alerts: any;
 
+  tableSource: any[];
+  displayedColumns: any[];
+  dataSource: MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
+
+  isLoaded: boolean;
+
   ngOnInit() {
     socket.on("cpu_data", (res) => {
       console.log("cpu_data");
@@ -425,8 +444,27 @@ export class DashboardComponent implements OnInit {
       this.panel.getQueryData(this.currentQuery).subscribe(
         (response) => {
           console.log(response);
-          this.currentQueryResults = JSON.stringify(response);
-          this.currentQuery = "";
+          var response2 = JSON.parse(response);
+          console.log(response2);
+          this.tableSource = [];
+          response2.forEach((roww: any) => {
+            roww['records'].forEach((row: any) => {
+              this.tableSource.push({
+                result: row.values.result,
+                table: row.values.table,
+                _start: row.values._start,
+                _stop: row.values._stop,
+                _time: row.values._time,
+                _value: row.values._value,
+                _field: row.values._field,
+                _measurement: row.values._measurement,
+                host: row.values.host
+              });
+            });
+          });
+          this.displayedColumns = ['result', 'table', '_start', '_stop', '_time', '_value', '_field', '_measurement', 'host'];
+          this.dataSource = new MatTableDataSource(this.tableSource);
+          this.isLoaded = true;
         },
         (error) => {
           console.log(error);

@@ -15,10 +15,12 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
 
 import { NgChartsModule } from 'ng2-charts';
 
 import { HttpClientModule } from '@angular/common/http';
+
 
 
 @NgModule({
@@ -40,6 +42,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatButtonModule,
     NgChartsModule,
     HttpClientModule,
+    MatSliderModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

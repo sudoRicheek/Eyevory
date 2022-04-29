@@ -1,3 +1,5 @@
+import profile
+from webbrowser import get
 from django import http
 from rest_framework import status, generics, serializers
 from rest_framework.response import Response
@@ -69,6 +71,7 @@ def get_profile(request):
         pr_serializer = ProfileSerializer(profile)
         data = pr_serializer.data
         data['username'] = profile.username
+        data['isadmin'] = profile.isadmin
         return Response(data)
 ###################################################################
 
@@ -78,28 +81,65 @@ def get_profile(request):
 @api_view(['GET', ])
 def list_nodes(request):
     if request.method == "GET":
-        return Response(Node.objects.all())
+        profile = get_object_or_404(Profile, username=request.user)
+        return Response(Node.objects.exclude(profile.granted_nodes.all()))
 ###################################################################
 
 
 
-# Add a node
+# Request a node
+@api_view(['GET', ])
+def request_node(request):
+    if request.method == "GET":
+        node = get_object_or_404(Node, ip=request.data['ip'])
+        profile = get_object_or_404(Profile, username=request.user)
+        profile.requested_nodes.add(node)
+###################################################################
+
+
+
+# Get all granted nodes
+@api_view(['GET', ])
+def granted_nodes(request):
+    if request.method == "GET":
+        profile = get_object_or_404(Profile, username=request.user)
+        return Response(profile.granted_nodes.all())
+###################################################################
+
+
+# Get all users
+@api_view(['GET', ])
+def list_users(request):
+    if request.method == "GET":
+        return Response(Profile.objects.filter(isadmin=0))
+###################################################################
+
+
+# Get requests of a user
+@api_view(['GET', ])
+def get_user_requets(request):
+    if request.method == "GET":
+        return Response(
+            get_object_or_404(Profile,
+                username = get_object_or_404(User,
+                    username = request.data['username']
+                    )
+            ).requested_nodes.all()
+        )
+###################################################################
+
+
+# Approve/Disprove Request of a user
 @api_view(['POST', ])
-def add_node(request):
-    if request.method == "POST":
-        serializer = NodeSerializer(data = request.data)
-        serializer.add()
-        return Response(status=status.HTTP_201_CREATED)
+def approve(request):
+    if request.method == "GET":
+        profile = get_object_or_404(Profile, 
+            username = get_object_or_404( User,
+                username = request.data['username'] 
+                ) 
+            )
+        node = get_object_or_404(Node, ip=request.data['ip'])
+        profile.requested_nodes.remove(node)
+        if request.data['approve']:
+            profile.granted_nodes.add(node)
 ###################################################################
-
-
-# Delete a node
-@api_view(['DELETE, '])
-def delete_node(request):
-    if request.method == "DELETE":
-        serializer = NodeSerializer(data = request.data)
-        serializer.remove()
-        return Response(status=status.HTTP_200_OK)
-###################################################################
-
-
