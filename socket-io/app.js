@@ -27,30 +27,39 @@ io.sockets.on("connection", (socket) => {
 
 function sendData(socket) {
   axios
-    .get("https://localhost:8000/api/influx_data/get_usage_cpu")
+    .get("http://localhost:8000/api/influx_data/get_usage_cpu")
     .then((res) => {
       console.log(`statusCode: ${res.status}`);
-    //   console.log(res);
+      console.log(res.data);
+      socket.emit("cpu_data", res.data);
     })
     .catch((error) => {
       console.error(error);
     });
+  
+  axios
+    .get("http://localhost:8000/api/influx_data/get_usage_mem")
+    .then((res) => {
+      console.log(`statusCode: ${res.status}`);
+      console.log(res.data);
+      socket.emit("mem_data", res.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+      
+  axios
+  .get("http://localhost:8000/api/influx_data/get_processes")
+  .then((res) => {
+    console.log(`statusCode: ${res.status}`);
+    console.log(res.data);
+    socket.emit("processes_data", res.data);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
-  if (x) {
-    socket.emit(
-      "data1",
-      Array.from({ length: 3 }, () => Math.floor(Math.random() * 590) + 10)
-    );
-    x = !x;
-  } else {
-    socket.emit(
-      "data2",
-      Array.from({ length: 3 }, () => Math.floor(Math.random() * 590) + 10)
-    );
-    x = !x;
-  }
-  console.log(`data is ${x}`);
   setTimeout(() => {
     sendData(socket);
-  }, 1000);
+  }, 10000);
 }
