@@ -24,18 +24,18 @@ from pytz import timezone
 @api_view(['POST', ])
 @permission_classes([])
 @authentication_classes([])
-def registration_view(request):  # For signup
+def RegisterView(request):  # For signup
     if request.method == 'POST':
-        serializer = RegistrationSerializer(data=request.data)
+        serializer = RegistrationSerializer(data = request.data)
         data = {}
         if serializer.is_valid():
-            user = serializer.save()
+            user = serializer.create(request.data)
             refresh = RefreshToken.for_user(user)
-            profile = get_object_or_404(Profile, user=user)
+            #profile = get_object_or_404(Profile, user=user)
 
             data['response'] = "Successfully Signed Up"
-            data['userName'] = user.userName
-            data['userId'] = user.id
+            data['username'] = user.username
+            # data['userId'] = user.id
             data['refresh'] = str(refresh)
             data['access'] = str(refresh.access_token)
             return Response(data)
@@ -50,8 +50,8 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data = super().validate(attrs)
 
         # Add extra responses here
-        data['userName'] = self.user.userName
-        data['userId'] = self.user.id
+        data['username'] = self.user.username
+        #data['name'] = self.user.name
         return data
 
 
@@ -59,14 +59,19 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 ###################################################################
 
-
-# Get Profile Details view
 @api_view(['GET', ])
 def get_profile(request):
-    if request.method == "GET":
-        profile = get_object_or_404(Profile, user=request.user)
-        pr_serializer = ProfileSerializer(profile)
-        data = pr_serializer.data
-        data['userName'] = profile.user.userName
-        return Response(data)
+    pass
+
+
+
+# Get Profile Details view
+#@api_view(['GET', ])
+#def get_profile(request):
+ #   if request.method == "GET":
+  #      profile = get_object_or_404(Profile, username=request.user)
+   #     pr_serializer = ProfileSerializer(profile)
+    #    data = pr_serializer.data
+     #   data['username'] = profile.username
+      #  return Response(data)
 ###################################################################
