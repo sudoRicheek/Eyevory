@@ -9,6 +9,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class AuthGuard implements CanActivate {
   status!: boolean;
+  status2!: boolean;
 
   constructor(
     private auth: AuthService,
@@ -23,6 +24,19 @@ export class AuthGuard implements CanActivate {
       this.status = status;
     });
     console.log(state.url)
+    if(route.data['accessRoles']){
+      this.auth.isAdmin.subscribe(status => {
+        this.status2 = status;
+      });
+      console.log(this.status, this.status2)
+      if(this.status && this.status2) return true;
+      this.router.navigate(['/home'], {
+        queryParams: {
+          return: state.url
+        }
+      });
+      return false;
+    }
     if (this.status) {
       return true;
     } else {

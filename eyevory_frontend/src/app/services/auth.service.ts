@@ -8,11 +8,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Injectable()
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
+  private Admin = new BehaviorSubject<boolean>(false);
 
   constructor(
     private router: Router,
     private server: ServerService,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {
     console.log('Auth Service');
     const access = localStorage.getItem('access');
@@ -26,6 +27,10 @@ export class AuthService {
     return this.loggedIn.asObservable();
   }
 
+  get isAdmin() {
+    return this.Admin.asObservable();
+  }
+
   login(user: { username: string, password: string }, ret: string) {
     if (user.username !== '' && user.password !== '') {
       return this.server.post('/api/token/', user, true).subscribe(
@@ -34,6 +39,11 @@ export class AuthService {
           localStorage.setItem('access', response.access);
           localStorage.setItem('refresh', response.refresh);
           this.loggedIn.next(true);
+          this.server.get('/api/user/profile/').subscribe(
+            data => {
+              this.Admin.next(data['isadmin']=="1" ? true : false);
+              console.log(this.Admin)
+            });
           this.router.navigateByUrl(ret);
           this.snackBar.open("Successfully Logged in", "Done", {
             duration: 5000,  // 5 sec timeout
@@ -67,6 +77,7 @@ export class AuthService {
           this.snackBar.open("Successfully Registered", "Done", {
             duration: 5000,  // 5 sec timeout
           });
+          this.Admin.next(user.isadmin==1 ? true : false);
         },
         error => {
           let error_message = '';
@@ -90,6 +101,7 @@ export class AuthService {
 
   logout() {
     this.loggedIn.next(false);
+    this.Admin.next(false);
     localStorage.clear();
     this.router.navigateByUrl('/login');
     this.snackBar.open(' Successfully Logged out. Come back again!', "Done", {
