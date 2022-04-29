@@ -6,15 +6,17 @@ import json
 import influxdb_client
 from influxdb_client.client.flux_table import FluxStructureEncoder
 
-bucket = "testing"
-org = "Eyevory"
-token = "i4RVgHl6-PjzA4KlN9qoqZrShTayWYzce5b3auUcI2zjuenBLIL22F1GhfuMdokgO1FOxTSa5r-o-vF0zyQJ0g=="
+# Richeek: 7asssEiVPEvIdlr-PR1XMg9cKxNI5xSfgkICYVOZw8QTm_CxRUVADPKhG4aM79BEBz-HOwe92VlcNL3XID8A5g==
+
+bucket = "test"
+org = "eyevory"
+token = "7asssEiVPEvIdlr-PR1XMg9cKxNI5xSfgkICYVOZw8QTm_CxRUVADPKhG4aM79BEBz-HOwe92VlcNL3XID8A5g=="
 url = "http://localhost:8086"
 
 client = influxdb_client.InfluxDBClient(
     url=url,
     token=token,
-    org=org
+    org=org,
 )
 
 query_api = client.query_api()
@@ -29,9 +31,10 @@ def get_query_output(request):
             return Response({'query': "This field is needed!"}, status=status.HTTP_403_FORBIDDEN)
         
         result_query = query_api.query(org=org, query=request.data.get('query', None).strip())
+        print(result_query)
         output = json.dumps(result_query[0], cls=FluxStructureEncoder, indent=2)
         print(output)
-    return Response(output, status=status.HTTP_200_OK)
+        return Response(output, status=status.HTTP_200_OK)
 
 
 @api_view(['GET', ])
@@ -135,10 +138,3 @@ def get_processes(request):
     result_proc['idle'] = result_idle[0].records[-1].get_value()
 
     return Response(result_proc, status=status.HTTP_200_OK)
-
-
-# print(get_usage_cpu())
-# print("-----------")
-# print(get_usage_mem())
-# print("-----------")
-# print(get_processes())
