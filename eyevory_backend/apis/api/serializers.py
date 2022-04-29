@@ -1,5 +1,5 @@
 import profile
-from typing_extensions import Required
+# from typing_extensions import Required
 from django.shortcuts import get_object_or_404
 from pkg_resources import require
 from rest_framework import serializers

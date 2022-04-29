@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     #REST_FRAMEWORK_URLS
     path('api/user/', include('apis.api.urls', 'user-api')),
-    # path('api/influx_data/', include('app_influxdb.api.urls', 'influxdb-api')),
+    path('api/influx_data/', include('app_influxdb.api.urls', 'influxdb-api')),
 
     #JWT_TOKEN_VIEWS
     # Send username and password to get new access and refresh tokens
