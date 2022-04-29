@@ -61,12 +61,6 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 ###################################################################
 
 
-@api_view(['POST', ])
-def login(request):
-    if request.method == "POST":
-        pass
-###################################################################
-
 # Get Profile Details view
 @api_view(['GET', ])
 def get_profile(request):
