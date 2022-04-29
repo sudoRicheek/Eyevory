@@ -1,8 +1,4 @@
-import profile
-from sys import maxsize
-from typing_extensions import Required
 from django.shortcuts import get_object_or_404
-from pkg_resources import require
 from rest_framework import serializers
 from apis.models import Profile, Node
 from django.contrib.auth.models import User
@@ -12,7 +8,7 @@ from django.contrib.auth.password_validation import validate_password
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['username', 'email', 'name', 'IsAdmin']
+        fields = ['username', 'email', 'name', 'isadmin']
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
@@ -23,7 +19,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
     password2 = serializers.CharField(write_only=True, required=True)
     name = serializers.CharField(required=True)
-    IsAdmin = serializers.IntegerField(required=True)
+    isadmin = serializers.IntegerField(required=True)
 
     class Meta:
         model = Profile
@@ -49,7 +45,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
         profile = Profile.objects.create(
             username = user,
-            IsAdmin = validated_data['isadmin'],
+            isadmin = validated_data['isadmin'],
             name = validated_data['name']
         )
         profile.save()
