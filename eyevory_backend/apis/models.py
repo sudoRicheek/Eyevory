@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     # User
     username = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_profile', editable=False)
-    IsAdmin = models.IntegerField(default=0, null=False)
+    isadmin = models.IntegerField(default=0, null=False)
     name = models.CharField(max_length=50, default='', null=False, blank=False)
 
     def __str__(self):
