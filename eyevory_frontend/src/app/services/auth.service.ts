@@ -56,9 +56,9 @@ export class AuthService {
     else return EMPTY;
   }
 
-  register(user: { username: string, password: string, password2: string, name: string, email: string, superadmin: string }) {
-    if (user.username !== '' && user.password !== '' && user.password2 !== '' && user.name !== '' && user.email !== '' && user.superadmin !== '') {
-      return this.server.post('/api/account/signup/', user, true).subscribe(
+  register(user: { username: string, password: string, password2: string, name: string, email: string, role: number }) {
+    if (user.username != '' && user.password != '' && user.password2 != '' && user.name != '' && user.email != '' && user.role != null ) {
+      return this.server.post('/api/user/register/', user, true).subscribe(
         response => {
           localStorage.setItem('access', response.access);
           localStorage.setItem('refresh', response.refresh);
