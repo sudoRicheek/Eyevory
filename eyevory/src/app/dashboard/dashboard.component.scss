@@ -9,18 +9,18 @@ p {
 
 .main-screen {
     background-color: #4B7BE5;
-    height: 74vh;
+    height: 84vh;
 }
 
 .options {
     background-color: #4B7BE5;
-    height: 74vh;
+    height: 84vh;
 }
 
 .query-panel {
     background-color: #4B7BE5;
     margin-top: 1vh;
-    height: 25vh;
+    height: 15vh;
 }
 
 ::ng-deep .mat-tab-label .mat-tab-label-content {
@@ -36,10 +36,6 @@ p {
 
 .bParent div {
     float: left;
-}
-
-.aParent div {
-    float: right;
 }
 
 .query-input {
