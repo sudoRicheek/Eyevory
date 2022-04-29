@@ -23,9 +23,14 @@
                 <div class="form-groups">
                     <mat-form-field color="accent">
                         <mat-label>Password</mat-label>
-                        <input matInput type="password" formControlName="password" placeholder="Enter Password" required />
+                        <input matInput [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Enter Password" required />
+                        <button color="accent" matSuffix mat-icon-button [attr.aria-label]="showPassword ? 'Hide' : 'Show'" (click)="showPassword = !showPassword" type="button">
+                        <mat-icon>{{ showPassword ? "visibility_off" : "visibility" }}</mat-icon> </button>
                         <mat-error *ngIf="form.controls['password'].hasError('required')">
                             Password is <strong>required</strong>
+                        </mat-error>
+                        <mat-error *ngIf="form.controls['password'].hasError('minLength')">
+                            Password must be <strong> at least 8 characters</strong> long
                         </mat-error>
                     </mat-form-field>
                 </div>

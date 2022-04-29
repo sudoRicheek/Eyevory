@@ -9,7 +9,8 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-
+  showPassword: boolean = false;
+  showPassword2: boolean = false;
   form!: FormGroup;
 
   constructor(
@@ -27,11 +28,20 @@ export class RegisterComponent implements OnInit {
     console.log('Hi');
     this.form = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required],
-      password2: ['', Validators.required],
+      password: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(8),
+      ])],
+      password2: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(8),
+      ])],
       name: ['', Validators.required],
-      email: ['', Validators.required],
-      role: ['', Validators.required]
+      email: ['', Validators.compose([
+        Validators.required,
+        Validators.email,
+      ]),],
+      isadmin: ['', Validators.required]
     });
   }
 
@@ -50,7 +60,7 @@ export class RegisterComponent implements OnInit {
       password2: this.form.get('password2')!.value,
       name: this.form.get('name')!.value,
       email: this.form.get('email')!.value,
-      role: this.form.get('role')!.value
+      isadmin: this.form.get('isadmin')!.value
     });
   }
 

@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
 
   form!: FormGroup;
   ret: string = '';
+  showPassword: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -29,7 +30,10 @@ export class LoginComponent implements OnInit {
     });
     this.form = this.fb.group({
       username: [''],
-      password: ['', Validators.required]
+      password: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(8),
+      ]),]
     });
     // Get the query params
     this.route.queryParams.subscribe(

@@ -23,9 +23,14 @@
                 <div class="form-groups">
                     <mat-form-field color="accent">
                         <mat-label>Password</mat-label>
-                        <input matInput type="password" formControlName="password" placeholder="Enter Password" required />
+                        <input matInput [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Enter Password" required />
+                        <button color="accent" matSuffix mat-icon-button [attr.aria-label]="showPassword ? 'Hide' : 'Show'" (click)="showPassword = !showPassword" type="button">
+                        <mat-icon>{{ showPassword ? "visibility_off" : "visibility" }}</mat-icon> </button>
                         <mat-error *ngIf="form.controls['password'].hasError('required')">
                             Password is <strong>required</strong>
+                        </mat-error>
+                        <mat-error *ngIf="form.controls['password'].hasError('minLength')">
+                            Password must be <strong> at least 8 characters</strong> long
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -37,9 +42,14 @@
                 <div class="form-groups">
                     <mat-form-field>
                         <mat-label>Confirm Password</mat-label>
-                        <input matInput type="password" formControlName="password2" placeholder="Re-enter password" required />
+                        <input matInput [type]="showPassword2 ? 'text' : 'password'" formControlName="password2" placeholder="Re-Enter Password" required />
+                        <button color="accent" matSuffix mat-icon-button [attr.aria-label]="showPassword2 ? 'Hide' : 'Show'" (click)="showPassword2 = !showPassword2" type="button">
+                        <mat-icon>{{ showPassword2 ? "visibility_off" : "visibility" }}</mat-icon> </button>
                         <mat-error *ngIf="form.controls['password2'].hasError('required') ">
                             Confirm Password is <strong>required</strong>
+                        </mat-error>
+                        <mat-error *ngIf="form.controls['password'].hasError('minLength')">
+                            Password must be <strong> at least 8 characters</strong> long
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -69,6 +79,9 @@
                         <mat-error *ngIf="form.controls['email'].hasError('required')">
                             Email is <strong>required</strong>
                         </mat-error>
+                        <mat-error *ngIf="form.controls['email'].hasError('email')">
+                            Email is <strong>invalid</strong>
+                        </mat-error>
                     </mat-form-field>
                 </div>
 
@@ -77,13 +90,20 @@
                 <br>
 
                 <div class="form-groups">
-                    <mat-form-field>
+                    <mat-radio-group formControlName="isadmin" placeholder="Enter Role" required aria-label="Select an Role">
                         <mat-label>Role</mat-label>
-                        <input matInput type="number" formControlName="role" placeholder="Enter Role" required />
+                        <br>
+                        <mat-radio-button value="1">Admin</mat-radio-button>
+                        <mat-radio-button value="0">User</mat-radio-button>
+                    </mat-radio-group>
+                    <!--<mat-form-field>
+                        <mat-label>Role</mat-label>
+                        <input matInput type="radio" formControlName="role" placeholder="Enter Role" required />
                         <mat-error *ngIf="form.controls['role'].hasError('required')">
                             Role is <strong>required</strong>
                         </mat-error>
-                    </mat-form-field>
+
+                    </mat-form-field> -->
                 </div>
                 <!--
                 <br>
