@@ -15,3 +15,23 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.mat-slider-thumb {
+	background-color: #5534A5 !important;
+  transform: scale(0) !important;
+}
+
+.mat-slider-thumb-label {
+	background-color: #4B7BE5 !important;
+  transform: rotate(45deg) !important;
+  border-radius: 50% 50% 0 !important;
+}
+
+.mat-slider-track-fill {
+	background-color: #4B7BE5 !important;
+}
+
+.mat-slider-thumb-label-text {
+  opacity: 1 !important;
+}
