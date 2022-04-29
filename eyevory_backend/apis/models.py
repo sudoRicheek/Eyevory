@@ -7,12 +7,17 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 
+class Roles(models.IntegerChoices):
+    Super = 0, 'super'
+    Admin = 1, 'admin'
+    User = 2, 'user'
 
 class Profile(models.Model):
     # User
     username = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_profile', editable=False)
+    role = models.IntegerField(default=Roles.User, choices=Roles.choices)
     #name = models.CharField(max_length=50, default='', null=True, blank=True)
-    email = models.EmailField()
+    
 
     #def save(self, *args, **kwargs):
         #if not self.nick:
@@ -22,6 +27,31 @@ class Profile(models.Model):
     def __str__(self):
         return self.username
 
+
+class SuperAdmin(models.Model):
+    profile = models.OneToOneField(Profile, primary_key=True, on_delete=models.CASCADE)
+
+class Node(models.Model):
+    ip = models.CharField(max_length=15, primary_key=True)
+    creator = models.ForeignKey(SuperAdmin, null=False, on_delete=models.CASCADE)
+
+class Admin(models.Model):
+    profile = models.OneToOneField(Profile, primary_key=True, on_delete=models.CASCADE)
+    super_admin = models.ForeignKey(SuperAdmin, null=False, on_delete=models.CASCADE)
+    granted_nodes = models.ManyToManyField(Node, through='AdminNode')
+
+class AdminNode(models.Model):
+    node = models.ForeignKey(Node, null=False, on_delete=models.CASCADE)
+    admin = models.ForeignKey(Admin, null=False, on_delete=models.CASCADE)
+
+class NormalUser(models.Model):
+    profile = models.OneToOneField(Profile, primary_key=True, on_delete=models.CASCADE)
+    super_admin = models.ForeignKey(SuperAdmin, null=False, on_delete=models.CASCADE)
+    granted_nodes = models.ManyToManyField(AdminNode, through='UserAdminNode')
+
+class UserAdminNode(models.Model):
+    admin_node = models.ForeignKey(AdminNode, null=False, on_delete=models.CASCADE)
+    user = models.ForeignKey(NormalUser, null=False, on_delete=models.CASCADE)
 
 #def create_profile(sender, **kwargs):
 #    if kwargs['created']:
