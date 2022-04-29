@@ -7,7 +7,7 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'eyevory_frontend';
+  title = 'Eyevory (Application Monitor)';
   constructor(public auth: AuthService) { }
 
   onLogout() {

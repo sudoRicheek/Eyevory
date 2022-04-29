@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
       password2: ['', Validators.required],
       name: ['', Validators.required],
       email: ['', Validators.required],
-      superadmin: ['', Validators.required]
+      role: ['', Validators.required]
     });
   }
 
@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
       password2: this.form.get('password2')!.value,
       name: this.form.get('name')!.value,
       email: this.form.get('email')!.value,
-      superadmin: this.form.get('superadmin')!.value
+      role: this.form.get('role')!.value
     });
   }
 

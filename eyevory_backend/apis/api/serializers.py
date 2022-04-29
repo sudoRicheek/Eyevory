@@ -1,8 +1,6 @@
-import profile
-from typing_extensions import Required
 from pkg_resources import require
 from rest_framework import serializers
-from apis.models import Profile, SuperAdmin, Node, Admin, AdminNode, NormalUser, UserAdminNode
+from apis.models import Profile
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password

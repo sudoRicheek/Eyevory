@@ -1,18 +1,22 @@
 <div *ngIf="auth.isLoggedIn | async as isLoggedIn; then authenticated else unauthenticated"></div>
 
 <ng-template #authenticated>
-    <mat-toolbar>
-        <button mat-raised-button color="primary" [routerLink]="['/register']">Sign Up</button>
+    <mat-toolbar color="accent">
         <span class="example-spacer"></span>
-        <span>Eyevory</span>
+        <span><a style="text-decoration: none; text-align:center;" routerLink="/home" class="title">{{title}}</a></span>
         <span class="example-spacer"></span>
-        <button mat-raised-button color="primary" [routerLink]="['/login']">Login</button>
+        <button mat-raised-button color="primary" (click)="onLogout()">Logout</button>
     </mat-toolbar>
 </ng-template>
 
 <ng-template #unauthenticated>
-    <mat-toolbar color="primary">
-        <a routerLink="/home" class="title">{{title}}</a>
+    <mat-toolbar color="accent">
+        <button mat-raised-button color="primary" [routerLink]="['/register']">Sign Up</button>
+        <span class="example-spacer"></span>
+        <span><a style="text-decoration: none; text-align:center;" routerLink="/home" class="title">{{title}}</a></span>
+        <span class="example-spacer"></span>
+        <button mat-raised-button color="primary" [routerLink]="['/login']">Login</button>
     </mat-toolbar>
 </ng-template>
-<router-outlet></router-outlet>
+<router-outlet>
+</router-outlet>
