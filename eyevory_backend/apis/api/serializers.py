@@ -11,7 +11,7 @@ from django.contrib.auth.password_validation import validate_password
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['username', 'email', 'name', 'IsAdmin']
+        fields = ['username', 'email', 'name', 'isadmin']
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
