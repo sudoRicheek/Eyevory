@@ -127,7 +127,7 @@
             </div>
           </mat-tab>
 
-          <mat-tab label="Server Statistics">
+          <mat-tab label="{{ hosts[0] }} Statistics">
             <mat-tab-group mat-align-tabs="start">
               <mat-tab label="CPU Usage">
                 <div style="overflow-y: scroll; height: 70vh">
@@ -500,6 +500,1155 @@
                         [labels]="pieChartLabels3"
                         [type]="'pie'"
                         [options]="pieChartOptions3"
+                        [legend]="true"
+                      >
+                      </canvas>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-tab>
+
+          <mat-tab *ngIf="hosts.length >= 2" label="{{ hosts[1] }} Statistics">
+            <mat-tab-group mat-align-tabs="start">
+              <mat-tab label="CPU Usage">
+                <div style="overflow-y: scroll; height: 70vh">
+                  <div class="bParent">
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData15"
+                        [options]="lineChartOptions15"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins15"
+                        [labels]="lineChartLabels15"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData16"
+                        [options]="lineChartOptions16"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins16"
+                        [labels]="lineChartLabels16"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData17"
+                        [options]="lineChartOptions17"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins17"
+                        [labels]="lineChartLabels17"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData18"
+                        [options]="lineChartOptions18"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins18"
+                        [labels]="lineChartLabels18"
+                      >
+                      </canvas>
+                    </div>
+                  </div>
+
+                  <div class="aParent">
+                    <div
+                      class="pieChart"
+                      style="
+                        display: block;
+                        width: 40%;
+                        margin-top: 0%;
+                        margin-left: auto;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="pieChartData4"
+                        [labels]="pieChartLabels4"
+                        [type]="'pie'"
+                        [options]="pieChartOptions4"
+                        [legend]="true"
+                      >
+                      </canvas>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Memory">
+                <div style="overflow-y: scroll; height: 70vh">
+                  <div class="bParent">
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData19"
+                        [options]="lineChartOptions19"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins19"
+                        [labels]="lineChartLabels19"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData20"
+                        [options]="lineChartOptions20"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins20"
+                        [labels]="lineChartLabels20"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData21"
+                        [options]="lineChartOptions21"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins21"
+                        [labels]="lineChartLabels21"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData22"
+                        [options]="lineChartOptions22"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins22"
+                        [labels]="lineChartLabels22"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData23"
+                        [options]="lineChartOptions23"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins23"
+                        [labels]="lineChartLabels23"
+                      >
+                      </canvas>
+                    </div>
+                  </div>
+
+                  <div class="aParent">
+                    <div
+                      class="pieChart"
+                      style="
+                        display: block;
+                        width: 40%;
+                        margin-top: 0%;
+                        margin-left: auto;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="pieChartData5"
+                        [labels]="pieChartLabels5"
+                        [type]="'pie'"
+                        [options]="pieChartOptions5"
+                        [legend]="true"
+                      >
+                      </canvas>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Processes">
+                <div style="overflow-y: scroll; height: 70vh">
+                  <div class="bParent">
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData24"
+                        [options]="lineChartOptions24"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins24"
+                        [labels]="lineChartLabels24"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData25"
+                        [options]="lineChartOptions25"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins25"
+                        [labels]="lineChartLabels25"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData26"
+                        [options]="lineChartOptions26"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins26"
+                        [labels]="lineChartLabels26"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData27"
+                        [options]="lineChartOptions27"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins27"
+                        [labels]="lineChartLabels27"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData28"
+                        [options]="lineChartOptions28"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins28"
+                        [labels]="lineChartLabels28"
+                      >
+                      </canvas>
+                    </div>
+                  </div>
+
+                  <div class="aParent">
+                    <div
+                      class="pieChart"
+                      style="
+                        display: block;
+                        width: 40%;
+                        margin-top: 0%;
+                        margin-left: auto;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="pieChartData6"
+                        [labels]="pieChartLabels6"
+                        [type]="'pie'"
+                        [options]="pieChartOptions6"
+                        [legend]="true"
+                      >
+                      </canvas>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-tab>
+
+          <mat-tab *ngIf="hosts.length >= 3" label="{{ hosts[2] }} Statistics">
+            <mat-tab-group mat-align-tabs="start">
+              <mat-tab label="CPU Usage">
+                <div style="overflow-y: scroll; height: 70vh">
+                  <div class="bParent">
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData29"
+                        [options]="lineChartOptions29"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins29"
+                        [labels]="lineChartLabels29"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData30"
+                        [options]="lineChartOptions30"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins30"
+                        [labels]="lineChartLabels30"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData31"
+                        [options]="lineChartOptions31"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins31"
+                        [labels]="lineChartLabels31"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData32"
+                        [options]="lineChartOptions32"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins32"
+                        [labels]="lineChartLabels32"
+                      >
+                      </canvas>
+                    </div>
+                  </div>
+
+                  <div class="aParent">
+                    <div
+                      class="pieChart"
+                      style="
+                        display: block;
+                        width: 40%;
+                        margin-top: 0%;
+                        margin-left: auto;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="pieChartData7"
+                        [labels]="pieChartLabels7"
+                        [type]="'pie'"
+                        [options]="pieChartOptions7"
+                        [legend]="true"
+                      >
+                      </canvas>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Memory">
+                <div style="overflow-y: scroll; height: 70vh">
+                  <div class="bParent">
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData33"
+                        [options]="lineChartOptions33"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins33"
+                        [labels]="lineChartLabels33"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData34"
+                        [options]="lineChartOptions34"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins34"
+                        [labels]="lineChartLabels34"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData35"
+                        [options]="lineChartOptions35"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins35"
+                        [labels]="lineChartLabels35"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData36"
+                        [options]="lineChartOptions36"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins36"
+                        [labels]="lineChartLabels36"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData37"
+                        [options]="lineChartOptions37"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins37"
+                        [labels]="lineChartLabels37"
+                      >
+                      </canvas>
+                    </div>
+                  </div>
+
+                  <div class="aParent">
+                    <div
+                      class="pieChart"
+                      style="
+                        display: block;
+                        width: 40%;
+                        margin-top: 0%;
+                        margin-left: auto;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="pieChartData8"
+                        [labels]="pieChartLabels8"
+                        [type]="'pie'"
+                        [options]="pieChartOptions8"
+                        [legend]="true"
+                      >
+                      </canvas>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Processes">
+                <div style="overflow-y: scroll; height: 70vh">
+                  <div class="bParent">
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData38"
+                        [options]="lineChartOptions38"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins38"
+                        [labels]="lineChartLabels38"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData39"
+                        [options]="lineChartOptions39"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins39"
+                        [labels]="lineChartLabels39"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData40"
+                        [options]="lineChartOptions40"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins40"
+                        [labels]="lineChartLabels40"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData41"
+                        [options]="lineChartOptions41"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins41"
+                        [labels]="lineChartLabels41"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData42"
+                        [options]="lineChartOptions42"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins42"
+                        [labels]="lineChartLabels42"
+                      >
+                      </canvas>
+                    </div>
+                  </div>
+
+                  <div class="aParent">
+                    <div
+                      class="pieChart"
+                      style="
+                        display: block;
+                        width: 40%;
+                        margin-top: 0%;
+                        margin-left: auto;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="pieChartData9"
+                        [labels]="pieChartLabels9"
+                        [type]="'pie'"
+                        [options]="pieChartOptions9"
+                        [legend]="true"
+                      >
+                      </canvas>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-tab>
+
+          <mat-tab *ngIf="hosts.length >= 3" label="{{ hosts[3] }} Statistics">
+            <mat-tab-group mat-align-tabs="start">
+              <mat-tab label="CPU Usage">
+                <div style="overflow-y: scroll; height: 70vh">
+                  <div class="bParent">
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData1"
+                        [options]="lineChartOptions1"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins1"
+                        [labels]="lineChartLabels1"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData2"
+                        [options]="lineChartOptions2"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins2"
+                        [labels]="lineChartLabels2"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData3"
+                        [options]="lineChartOptions3"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins3"
+                        [labels]="lineChartLabels3"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData4"
+                        [options]="lineChartOptions4"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins4"
+                        [labels]="lineChartLabels4"
+                      >
+                      </canvas>
+                    </div>
+                  </div>
+
+                  <div class="aParent">
+                    <div
+                      class="pieChart"
+                      style="
+                        display: block;
+                        width: 40%;
+                        margin-top: 0%;
+                        margin-left: auto;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="pieChartData10"
+                        [labels]="pieChartLabels10"
+                        [type]="'pie'"
+                        [options]="pieChartOptions10"
+                        [legend]="true"
+                      >
+                      </canvas>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Memory">
+                <div style="overflow-y: scroll; height: 70vh">
+                  <div class="bParent">
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData5"
+                        [options]="lineChartOptions5"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins5"
+                        [labels]="lineChartLabels5"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData6"
+                        [options]="lineChartOptions6"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins6"
+                        [labels]="lineChartLabels6"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData7"
+                        [options]="lineChartOptions7"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins7"
+                        [labels]="lineChartLabels7"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData8"
+                        [options]="lineChartOptions8"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins8"
+                        [labels]="lineChartLabels8"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData9"
+                        [options]="lineChartOptions9"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins9"
+                        [labels]="lineChartLabels9"
+                      >
+                      </canvas>
+                    </div>
+                  </div>
+
+                  <div class="aParent">
+                    <div
+                      class="pieChart"
+                      style="
+                        display: block;
+                        width: 40%;
+                        margin-top: 0%;
+                        margin-left: auto;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="pieChartData11"
+                        [labels]="pieChartLabels11"
+                        [type]="'pie'"
+                        [options]="pieChartOptions11"
+                        [legend]="true"
+                      >
+                      </canvas>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Processes">
+                <div style="overflow-y: scroll; height: 70vh">
+                  <div class="bParent">
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData10"
+                        [options]="lineChartOptions10"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins10"
+                        [labels]="lineChartLabels10"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData11"
+                        [options]="lineChartOptions11"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins11"
+                        [labels]="lineChartLabels11"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData12"
+                        [options]="lineChartOptions12"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins12"
+                        [labels]="lineChartLabels12"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData13"
+                        [options]="lineChartOptions13"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins13"
+                        [labels]="lineChartLabels13"
+                      >
+                      </canvas>
+                    </div>
+
+                    <div
+                      class="lineChart"
+                      style="
+                        display: block;
+                        width: 45%;
+                        margin-top: 5%;
+                        margin-left: 3%;
+                        margin-right: 0%;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="lineChartData14"
+                        [options]="lineChartOptions14"
+                        [legend]="true"
+                        [plugins]="lineChartPlugins14"
+                        [labels]="lineChartLabels14"
+                      >
+                      </canvas>
+                    </div>
+                  </div>
+
+                  <div class="aParent">
+                    <div
+                      class="pieChart"
+                      style="
+                        display: block;
+                        width: 40%;
+                        margin-top: 0%;
+                        margin-left: auto;
+                        margin-right: auto;
+                      "
+                    >
+                      <canvas
+                        baseChart
+                        [datasets]="pieChartData12"
+                        [labels]="pieChartLabels12"
+                        [type]="'pie'"
+                        [options]="pieChartOptions12"
                         [legend]="true"
                       >
                       </canvas>

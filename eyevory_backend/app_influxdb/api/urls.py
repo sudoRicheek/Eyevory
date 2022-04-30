@@ -2,8 +2,10 @@ from django.urls import path
 
 from app_influxdb.api.views import (
 	get_alerts,
+	get_available_servers,
 	get_processes,
 	get_query_output,
+	get_thresholds,
 	get_usage_cpu,
 	get_usage_mem,
 	update_thresholds,
@@ -16,5 +18,7 @@ urlpatterns = [
 	path('get_processes/', get_processes, name='influxdb-api-processes'),
 	path('get_query_output/', get_query_output, name='influxdb-api-query-panel'),
 	path('get_alerts/', get_alerts, name='influxdb-api-alerts'),
-	path('update_thresholds/', update_thresholds, name='influxdb-api-update-thresholds')
+	path('update_thresholds/', update_thresholds, name='influxdb-api-update-thresholds'),
+	path('get_thresholds/', get_thresholds, name='influxdb-api-get-thresholds'),
+	path('get_available_servers/', get_available_servers, name='influxdb-api-get-available-servers'),
 ]
