@@ -1,17 +1,26 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
-const baseUrl = 'http://192.168.1.105:8000';
+const baseUrl = 'http://10.42.0.57:8000';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServerService {
 
+  private isAdmin = new BehaviorSubject<boolean>(false);
+
   constructor(
     private http: HttpClient
   ) { }
+
+  get isAnAdmin() {
+    this.get("/api/user/profile").subscribe( data => {
+      if(parseInt(data['isadmin'])==1) this.isAdmin.next(true);
+    })
+    return this.isAdmin.asObservable();
+  }
 
   request(method: string, route: string, data?: any) {
     if (method === 'GET') {

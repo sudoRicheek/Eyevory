@@ -23,6 +23,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AuthGuard } from './guards/auth.guard';
+import { AdminComponent } from './admin/admin.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { AuthGuard } from './guards/auth.guard';
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
