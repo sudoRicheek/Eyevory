@@ -70,16 +70,16 @@ function sendData(socket) {
     console.error(error);
   });
 
-//   axios
-//   .get("http://localhost:8000/api/influx_data/get_alerts")
-//   .then((res) => {
-//     console.log(`statusCode: ${res.status}`);
-//     console.log(res.data);
-//     socket.emit("alerts", res.data);
-//   })
-//   .catch((error) => {
-//     console.error(error);
-//   });
+  axios
+  .get("http://localhost:8000/api/influx_data/get_alerts")
+  .then((res) => {
+    console.log(`statusCode: ${res.status}`);
+    console.log(res.data);
+    socket.emit("alerts", res.data);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
   
 

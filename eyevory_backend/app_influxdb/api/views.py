@@ -187,7 +187,7 @@ def get_processes(request):
         queries_hosts[host+"_running"] = query_proc_running + " and r.host == " + "\"" + host + "\")",
         queries_hosts[host+"_sleeping"] = query_proc_sleeping + " and r.host == " + "\"" + host + "\")",
         # queries_hosts[host+"_zombies"] = query_proc_zombies+ " and r.host == " + "\"" + host + "\")"
-        queries_hosts[host+"_idle"] = query_proc_idle + " and r.host == " + "\"" + host + "\")"
+        # queries_hosts[host+"_idle"] = query_proc_idle + " and r.host == " + "\"" + host + "\")"
 
     results_hosts = {}
     for host in HOSTS:
@@ -195,7 +195,7 @@ def get_processes(request):
         results_hosts[host+"running"] = query_api.query(org=org, query=queries_hosts[host+"_running"][0])
         results_hosts[host+"sleeping"] = query_api.query(org=org, query=queries_hosts[host+"_sleeping"][0])
         # results_hosts[host+"zombies"] = query_api.query(org=org, query=queries_hosts[host+"_zombies"][0])
-        results_hosts[host+"idle"] = query_api.query(org=org, query=queries_hosts[host+"_idle"][0])
+        # results_hosts[host+"idle"] = query_api.query(org=org, query=queries_hosts[host+"_idle"][0])
 
     result_mem_usage = {}
     for host in HOSTS:
@@ -203,7 +203,7 @@ def get_processes(request):
         result_mem_usage[host+'running'] = results_hosts[host+"running"][0].records[-1].get_value()
         result_mem_usage[host+'sleeping'] = results_hosts[host+"sleeping"][0].records[-1].get_value()
         # result_mem_usage[host+'zombies'] = results_hosts[host+"zombies"][0].records[-1].get_value()
-        result_mem_usage[host+'idle'] = results_hosts[host+"idle"][0].records[-1].get_value()
+        # result_mem_usage[host+'idle'] = results_hosts[host+"idle"][0].records[-1].get_value()
 
     return Response(result_mem_usage, status=status.HTTP_200_OK)
 
@@ -285,6 +285,6 @@ def get_available_servers(request):
     data = {}
     data["hosts"] = list(set(hosts))
 
-    HOSTS = data['hosts']
+    HOSTS = data["hosts"]
 
     return Response(data, status=status.HTTP_200_OK)

@@ -1217,12 +1217,12 @@ export class DashboardComponent implements OnInit {
 
   addAlert(alertData) {
     this.hosts.forEach((host) => {
-      if (alertData[host].cpu_idle_warning == true)
+      if (alertData[host + "_cpu_idle_warning"] == true)
         this.alerts.push({"title": "normal", "message": "[" + host + "] CPU too much IDLE"});
-      if (alertData[host].mem_available_low_warning == true)
+      if (alertData[host + "_mem_available_low_warning"] == true)
         this.alerts.push({"title": "danger", "message": "[" + host + "] Memory availability low"});
-      if (alertData[host].mem_available_low_warning == false && alertData[host].time_mem_threshold_cross > 0 && alertData[host].time_mem_threshold_cross < 1000)
-        this.alerts.push({"title": "danger", "message": "[" + host + "] Memory availability predicted to be low in " + alertData[host].time_mem_threshold_cross + " seconds"});
+      if (alertData[host + "_mem_available_low_warning"] == false && alertData[host + "_time_mem_threshold_cross"] > 0 && alertData[host + "_time_mem_threshold_cross"] < 1000)
+        this.alerts.push({"title": "danger", "message": "[" + host + "] Memory availability predicted to be low in " + alertData[host + "_time_mem_threshold_cross"] + " seconds"});
       console.log(this.alerts);
     });
   }
@@ -1396,7 +1396,7 @@ export class DashboardComponent implements OnInit {
     this.charts.forEach((child) => {
       console.log(i);
       if (i%17 == 11) {
-        child.chart.data.datasets[0].data.push(data[this.hosts[Math.floor(i/17)] + "total"]);
+        child.chart.data.datasets[0].data.push(data[this.hosts[Math.floor(i/17)] + "total"] ? data[this.hosts[Math.floor(i/17)] + "total"] : 0);
         child.chart.data.labels.push("");
         if (child.chart.data.datasets[0].data.length > 10) {
           child.chart.data.labels.shift();
