@@ -213,17 +213,23 @@ def get_processes(request):
 def get_alerts(request):
     CPU_TOO_MUCH_IDLE = {}
     for host in HOSTS:
-        if CPU_IDLE_TIME[host][-1] > CPU_IDLE_THRESHOLD:
+        CPU_TOO_MUCH_IDLE[host] = False
+
+    for host in HOSTS:
+        if host in CPU_IDLE_TIME and CPU_IDLE_TIME[host][-1] > CPU_IDLE_THRESHOLD:
             CPU_TOO_MUCH_IDLE[host] = True
 
     MEM_AVAILABLE_LOW = {}
     for host in HOSTS:
-        if MEM_AVAILABLE[host][-1] < MEM_AVAILABLE_THRESHOLD*1073741824:
+        MEM_AVAILABLE_LOW[host] = False
+
+    for host in HOSTS:
+        if host in MEM_AVAILABLE and MEM_AVAILABLE[host][-1] < MEM_AVAILABLE_THRESHOLD*1073741824:
             MEM_AVAILABLE_LOW[host] = True
     
     TIME_THRESHOLD_CROSS = {}
     for host in HOSTS:
-        if len(MEM_AVAILABLE[host]) == 10:
+        if host in MEM_AVAILABLE and len(MEM_AVAILABLE[host]) == 10:
             slope, intercept, _, _, _ = linregress(-np.arange(10)*10, MEM_AVAILABLE[host])
             if abs(slope) < 1e-6:
                 TIME_THRESHOLD_CROSS[host] = 1e+9
